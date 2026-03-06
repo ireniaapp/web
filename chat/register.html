@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8"><title>Irenia | Registro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irenia | Registro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -12,16 +14,15 @@
             <h2 class="text-lg text-slate-400 mt-2">Crea tu cuenta médica</h2>
         </div>
         <form id="register-form" class="space-y-4">
-            <input type="email" id="email" placeholder="Email" required class="w-full p-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-white outline-none">
-            <input type="password" id="password" placeholder="Contraseña" required class="w-full p-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-white outline-none">
-            <input type="text" id="phone" placeholder="Teléfono (WhatsApp)" class="w-full p-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-white outline-none">
-            <button type="submit" class="w-full bg-blue-600 py-4 rounded-2xl text-white font-bold transition-all">Comenzar ahora</button>
+            <input type="email" id="email" placeholder="Email" required class="w-full p-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-white outline-none focus:border-blue-500">
+            <input type="password" id="password" placeholder="Contraseña" required class="w-full p-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-white outline-none focus:border-blue-500">
+            <input type="text" id="phone" placeholder="Teléfono (WhatsApp)" class="w-full p-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-white outline-none focus:border-blue-500">
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl text-white font-bold transition-all transform active:scale-95">Comenzar ahora</button>
         </form>
         <p class="text-slate-500 text-sm text-center mt-6 italic">¿Ya tienes cuenta? <a href="login.html" class="text-blue-400 font-bold hover:underline">Inicia sesión</a></p>
     </div>
-    <script>
-        const _supabase = supabase.createClient('https://ttymwhkhwwgljuguxeia.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0eW13aGtod3dnbGp1Z3V4ZWlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5NzcxMjIsImV4cCI6MjA4NzU1MzEyMn0.iLxKac2QqiVo7sGrI84bp0yAxplfPAU_qev6A7knW6k');
-    </script>
+
+    <script src="config.js"></script>
     <script src="auth.js"></script>
 </body>
 </html>
