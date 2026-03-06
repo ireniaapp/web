@@ -1,42 +1,44 @@
-// chat.js
+const chatForm = document.getElementById('chat-form');
+const textInput = document.getElementById('text-input');
 const history = document.getElementById('conversation-history');
-const input = document.getElementById('text-input');
-const sendBtn = document.getElementById('send-btn');
-const voiceBtn = document.getElementById('voice-trigger');
+const voiceTrigger = document.getElementById('voice-trigger');
 const statusText = document.getElementById('status-text');
 
-function appendMessage(role, text) {
-    const msg = document.createElement('div');
-    msg.className = `max-w-[80%] p-4 rounded-2xl ${role === 'user' ? 'bg-blue-600 text-white self-end' : 'bg-slate-800 text-slate-200 self-start'}`;
-    msg.innerText = text;
-    history.appendChild(msg);
+// Función para pintar mensajes
+function addMsg(role, content) {
+    const div = document.createElement('div');
+    div.className = `p-4 rounded-2xl max-w-[80%] ${role === 'user' ? 'bg-blue-600 text-white self-end ml-auto' : 'bg-slate-800 text-slate-200 self-start'}`;
+    div.innerText = content;
+    history.appendChild(div);
     history.scrollTop = history.scrollHeight;
 }
 
-// Enviar texto
-sendBtn.addEventListener('click', () => {
-    if (!input.value.trim()) return;
-    appendMessage('user', input.value);
-    
-    // Simulación de respuesta de Irenia
-    setTimeout(() => {
-        appendMessage('assistant', "Entendido. Estoy procesando tu información médica para darte un diagnóstico preciso.");
-    }, 1000);
-    
-    input.value = '';
-});
+// Enviar mensaje
+if (chatForm) {
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = textInput.value.trim();
+        if (!text) return;
 
-// Animación de Micrófono
-let listening = false;
-voiceBtn.addEventListener('click', () => {
-    listening = !listening;
-    if (listening) {
-        voiceBtn.classList.add('orb-listening');
-        statusText.innerText = "Escuchando voz...";
-        statusText.classList.replace('text-blue-500', 'text-red-500');
+        addMsg('user', text);
+        textInput.value = '';
+
+        // Simulación de respuesta IA
+        setTimeout(() => {
+            addMsg('assistant', "Irenia Pro está analizando tu consulta... ¿Tienes algún síntoma adicional?");
+        }, 1000);
+    });
+}
+
+// Efecto de Micrófono
+let isListening = false;
+voiceTrigger.addEventListener('click', () => {
+    isListening = !isListening;
+    if (isListening) {
+        voiceTrigger.classList.add('orb-listening');
+        statusText.innerText = "Escuchando...";
     } else {
-        voiceBtn.classList.remove('orb-listening');
+        voiceTrigger.classList.remove('orb-listening');
         statusText.innerText = "Motor Listo";
-        statusText.classList.replace('text-red-500', 'text-blue-500');
     }
 });
