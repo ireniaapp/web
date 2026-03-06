@@ -1,24 +1,41 @@
-// Configuración de Supabase
 const SUPABASE_URL = 'https://ttymwhkhwwgljuguxeia.supabase.co';
-const SUPABASE_KEY = 'TU_ANON_KEY_AQUI'; // USA TU ANON KEY REAL DEL DASHBOARD
+const SUPABASE_KEY = 'TU_ANON_KEY_REAL'; // <-- REEMPLAZA ESTO
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Registro de usuarios
-const registerForm = document.getElementById('register-form');
-if (registerForm) {
-    registerForm.addEventListener('submit', async (e) => {
+// REGISTRO
+const regForm = document.getElementById('register-form');
+if (regForm) {
+    regForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
+        const phone = document.getElementById('phone').value;
 
-        const { data, error } = await _supabase.auth.signUp({ email, password });
-
-        if (error) alert("Error: " + error.message);
-        else alert("¡Registro exitoso! Revisa tu correo.");
+        const { error } = await _supabase.auth.signUp({ 
+            email, 
+            password, 
+            options: { data: { phone } } 
+        });
+        if (error) alert(error.message);
+        else alert("Registro exitoso. Revisa tu email.");
     });
 }
 
-// Cerrar sesión
+// LOGIN
+const logForm = document.getElementById('login-form');
+if (logForm) {
+    logForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        const { error } = await _supabase.auth.signInWithPassword({ email, password });
+        if (error) alert(error.message);
+        else window.location.href = "index.html";
+    });
+}
+
+// LOGOUT
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
     logoutBtn.addEventListener('click', async () => {
@@ -27,13 +44,12 @@ if (logoutBtn) {
     });
 }
 
-// Protección de rutas: Si no hay sesión, volver al login
-async function checkSession() {
+// PROTECCIÓN DE RUTA
+async function checkUser() {
     const { data: { session } } = await _supabase.auth.getSession();
-    const isIndex = window.location.pathname.includes('index.html') || window.location.pathname === '/';
-    
-    if (!session && isIndex) {
+    const path = window.location.pathname;
+    if (!session && (path.includes('index.html') || path === '/')) {
         window.location.href = "login.html";
     }
 }
-checkSession();
+checkUser();
